@@ -1,13 +1,13 @@
 //
-//  Week4DemoUITests.swift
-//  Week4DemoUITests
+//  StateDemoUITests.swift
+//  StateDemoUITests
 //
-//  Created by Bennett Lee on 9/15/25.
+//  Created by Bennett Lee on 9/17/25.
 //
 
 import XCTest
 
-final class Week4DemoUITests: XCTestCase {
+final class StateDemoUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -33,9 +33,11 @@ final class Week4DemoUITests: XCTestCase {
 
     @MainActor
     func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
-        measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
+            // This measures how long it takes to launch your application.
+            measure(metrics: [XCTApplicationLaunchMetric()]) {
+                XCUIApplication().launch()
+            }
         }
     }
 }

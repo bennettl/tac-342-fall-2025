@@ -1,13 +1,13 @@
 //
-//  Week4DemoUITestsLaunchTests.swift
-//  Week4DemoUITests
+//  StateDemoUITestsLaunchTests.swift
+//  StateDemoUITests
 //
-//  Created by Bennett Lee on 9/15/25.
+//  Created by Bennett Lee on 9/17/25.
 //
 
 import XCTest
 
-final class Week4DemoUITestsLaunchTests: XCTestCase {
+final class StateDemoUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

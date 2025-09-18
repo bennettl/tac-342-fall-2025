@@ -1,14 +1,14 @@
 //
-//  Week4DemoTests.swift
-//  Week4DemoTests
+//  StateDemoTests.swift
+//  StateDemoTests
 //
-//  Created by Bennett Lee on 9/15/25.
+//  Created by Bennett Lee on 9/17/25.
 //
 
 import Testing
-@testable import Week4Demo
+@testable import StateDemo
 
-struct Week4DemoTests {
+struct StateDemoTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.
