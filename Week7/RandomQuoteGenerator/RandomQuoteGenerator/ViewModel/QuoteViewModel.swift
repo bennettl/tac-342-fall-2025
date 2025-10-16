@@ -51,12 +51,42 @@ class QuoteViewModel {
                 message: "I attribute my success to this: I never gave or took any excuse"
             ),
         ]
+
+//        // 1. Find a location to save
+//        let documentsDiectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        // /path/to/documents/directory + "filename"
+//        let filePath = "\(documentsDiectory)my-file.txt"
+//
+//        // 2. Convert the object to Data
+//        let somethingToSave = "somethingToSave"
+//
+//        // 3. Write to disk
+//        do {
+//            let url = URL(string: filePath)!
+//            try somethingToSave.write(to: url, atomically: true, encoding: .utf8)
+//        } catch {
+//           print("Could not save to file \(error)")
+//        }
+
+    }
+
+    func save() {
     }
 
     func generate() {
         let randomIndex = Int.random(in: 0..<quotes.count)
 
         currentIndex = randomIndex
+    }
+
+    func create(author: String, message: String) {
+        // Ideally, do some sort of validation,
+        if author.isEmpty || message.isEmpty {
+            return
+        }
+
+        let quote = Quote(id: UUID(), author: author, message: message)
+        quotes.append(quote)
     }
 
 

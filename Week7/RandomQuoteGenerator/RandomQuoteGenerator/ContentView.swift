@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var quoteViewModel = QuoteViewModel()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            QuoteListPage()
+                .tabItem{
+                    Label("List", systemImage: "list.bullet")
+                }
+            RandomQuotePage()
+                .tabItem{
+                    Label("Random", systemImage: "quote.opening")
+                }
         }
-        .padding()
+        .environment(quoteViewModel)
     }
 }
 

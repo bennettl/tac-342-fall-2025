@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RandomQuotePage: View {
 
-    @State var quoteViewModel = QuoteViewModel()
+    @Environment(QuoteViewModel.self) var quoteViewModel
 
     var body: some View {
         VStack(spacing: 12) {
@@ -34,4 +34,5 @@ struct RandomQuotePage: View {
 
 #Preview {
     RandomQuotePage()
+        .environment(QuoteViewModel())
 }

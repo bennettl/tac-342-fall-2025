@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct QuoteListPage: View {
-    @State var quotesViewModel = QuoteViewModel()
+    @Environment(QuoteViewModel.self) var quoteViewModel
 
     var body: some View {
         NavigationStack {
-            List($quotesViewModel.quotes, id: \.self, editActions: .delete) { $quote in
+            List(quoteViewModel.quotes) { quote in //, id: \.self, editActions: .delete) { $quote in
                 VStack(alignment: .leading, spacing: 6) {
                     Text(quote.message)
                     Text(quote.author)
@@ -20,6 +20,23 @@ struct QuoteListPage: View {
                 }
             }
             .navigationTitle("Quotes")
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+//                ToolbarItem(placement: .topBarLeading) {
+//                    Button("Leading"){
+//
+//                    }
+//                }
+//                ToolbarItem(placement: .topBarTrailing) {
+//                    Button("Trailing"){
+//
+//                    }
+//                }
+
+                NavigationLink("Add") {
+                    AddQuotePage()
+                }
+            }
         }
 
 //        List(quotesViewModel.quotes) { quote in
@@ -34,4 +51,6 @@ struct QuoteListPage: View {
 
 #Preview {
     QuoteListPage()
+        .environment(QuoteViewModel())
 }
+
