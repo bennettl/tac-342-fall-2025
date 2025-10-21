@@ -13,14 +13,19 @@ struct QuoteListPage: View {
     var body: some View {
         NavigationStack {
             List(quoteViewModel.quotes) { quote in //, id: \.self, editActions: .delete) { $quote in
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(quote.message)
-                    Text(quote.author)
-                        .font(.caption)
+                NavigationLink(value: quote) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(quote.message)
+                        Text(quote.author)
+                            .font(.caption)
+                    }
                 }
             }
             .navigationTitle("Quotes")
             .navigationBarTitleDisplayMode(.large)
+            .navigationDestination(for: Quote.self) { quote in
+                QuoteFormPage(quote: quote)
+            }
             .toolbar {
 //                ToolbarItem(placement: .topBarLeading) {
 //                    Button("Leading"){
@@ -34,7 +39,7 @@ struct QuoteListPage: View {
 //                }
 
                 NavigationLink("Add") {
-                    AddQuotePage()
+                    QuoteFormPage()
                 }
             }
         }

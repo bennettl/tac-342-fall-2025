@@ -11,8 +11,13 @@ import Observation
 @Observable
 class QuoteViewModel {
 
-    var quotes: [Quote]
+    var quotes: [Quote] {
+        didSet {
+            save()
+        }
+    }
 
+    var fileUrl: URL
     var currentIndex = 0
 
     var currentQuote: Quote? {
@@ -24,33 +29,53 @@ class QuoteViewModel {
     }
 
     init() {
-        self.quotes = [
-            Quote(
-                id: UUID(),
-                author: "The Buddha",
-                message: "The mind is everything. What you think you become"
-            ),
-            Quote(
-                id: UUID(),
-                author: "Walt Disney ",
-                message: "If you can dream it, you can do it"
-            ),
-            Quote(
-                id: UUID(),
-                author: "Helen Keller ",
-                message: "Keep your face always toward the sunshine, and shadows will fall behind you"
-            ),
-            Quote(
-                id: UUID(),
-                author: "Norman Vaughan ",
-                message: "Dream big and dare to fail"
-            ),
-            Quote(
-                id: UUID(),
-                author: "Florence Nightingale",
-                message: "I attribute my success to this: I never gave or took any excuse"
-            ),
-        ]
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let filePath = "\(documentsDirectory)quotes.json"
+
+        let fileUrl = URL(string: filePath)!
+
+        do {
+            // 1. First a place to load the data (done in initializer)
+            let data = try Data(contentsOf: fileUrl)
+
+            // 2. Convert JSON > Swift
+            let decoder = JSONDecoder()
+            let quotes = try decoder.decode(Array<Quote>.self, from: data)
+
+            // 3. Set our properties to native swift object
+            self.quotes = quotes
+        } catch {
+            print(error)
+
+            self.quotes = [
+                Quote(
+                    id: UUID(),
+                    author: "The Buddha",
+                    message: "The mind is everything. What you think you become"
+                ),
+                Quote(
+                    id: UUID(),
+                    author: "Walt Disney ",
+                    message: "If you can dream it, you can do it"
+                ),
+                Quote(
+                    id: UUID(),
+                    author: "Helen Keller ",
+                    message: "Keep your face always toward the sunshine, and shadows will fall behind you"
+                ),
+                Quote(
+                    id: UUID(),
+                    author: "Norman Vaughan ",
+                    message: "Dream big and dare to fail"
+                ),
+                Quote(
+                    id: UUID(),
+                    author: "Florence Nightingale",
+                    message: "I attribute my success to this: I never gave or took any excuse"
+                ),
+            ]
+        }
+        self.fileUrl = fileUrl
 
 //        // 1. Find a location to save
 //        let documentsDiectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -71,6 +96,19 @@ class QuoteViewModel {
     }
 
     func save() {
+        do {
+            // 1. Find a place to save it (done this initializer)
+
+            // 2 convert our array of quotes to binary
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(quotes)
+
+            // 3. write the binary data to disk
+            try data.write(to: fileUrl)
+
+        } catch {
+            print(error)
+        }
     }
 
     func generate() {
@@ -87,6 +125,15 @@ class QuoteViewModel {
 
         let quote = Quote(id: UUID(), author: author, message: message)
         quotes.append(quote)
+    }
+
+    func update(newQuote: Quote) {
+        // Find the index for a given id
+        guard let index = quotes.firstIndex(where: { quote in quote.id == newQuote.id }) else {
+            return
+        }
+
+        quotes[index] = newQuote
     }
 
 

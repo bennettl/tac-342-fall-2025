@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Quote: Identifiable, Hashable {
+struct Quote: Identifiable, Hashable, Codable {
     let id: UUID // universially unique identifier
     let author: String
     let message: String
